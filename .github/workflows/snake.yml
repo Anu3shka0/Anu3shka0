@@ -1,62 +1,34 @@
-name: Generate Snake Animation
+name: Generate snake animation
 
 on:
-  schedule: # Run automatically at 12 am UTC
-    - cron: '0 0 * * *'
+  schedule: # execute every 12 hours
+    - cron: "* */12 * * *"
+
   workflow_dispatch:
+
   push:
     branches:
-      - master  # Change this to main if your default branch is main
+    - main
 
 jobs:
-  build:
+  generate:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: generate snake.svg
+        uses: Platane/snk/svg-only@v3
         with:
-          node-version: '14'
+          github_user_name: ${{ github.repository_owner }}
+          outputs: dist/snake.svg?palette=github-dark
 
-      - name: Install dependencies
-        run: npm install -g platane/snk
 
-      - name: AddThe error occurs because the command `snk` is not found. This is likely due to the PATH not being updated correctly after installing `platane/snk`. To fix this, npm bin to PATH
-        run: echo "$(npm bin -g)" you can modify the workflow to ensure the PATH is updated correctly and use `source` to reload the environment variables. Here is the updated `snake.yml` file:
-
-```yaml
-name: Generate Snake Animation
-
-on:
-  schedule: >> $GITHUB_PATH
-
-      - # Run automatically at 12 am UTC
-    - cron: '0 0 * * *'
-  workflow_dispatch:
-  push:
-    branches:
- name: Generate Snake Animation
-        run: snk generate --output dist/snake.svg
+      - name: push snake.svg to the output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB      - master  # Change this to main if your default branch is main
-
-jobs:
-  build:
-    runs-on: ubuntu-l_TOKEN }}
-
-      - name: Commit and push the Snake Animation
-        run: |
-          git config --global useratest
-
-    steps:
-      - name: Checkout the repository
-.name '${{ github.actor }}'
-          git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-          git add dist/snake.svg
-          git        uses: actions/checkout@v2
-
-      - name: Set up Node.js commit -m 'Generate Snake Animation'
-          git push
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
