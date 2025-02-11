@@ -1,4 +1,4 @@
-<h2 align="left">Hi 👋! My name is Anushka Tiwari and I'm a Student from VIT Bhopal</h2>
+<h2 align="left">Hi 👋! My name is Anushka Tiwari and I am a Student at VIT Bhopal</h2>
 
 ###
 
