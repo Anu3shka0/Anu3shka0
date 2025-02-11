@@ -21,8 +21,11 @@ jobs:
         with:
           node-version: '14'
 
-      -  name: Install dependencies
-         run: npm install -g platane/snk
+      - name: Install dependencies
+        run: npm install -g platane/snk
+
+      - name: Add snk to PATH
+        run: echo "$(npm bin -g)" >> $GITHUB_PATH
 
       - name: Generate Snake Animation
         run: snk generate --output dist/snake.svg
